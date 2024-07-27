@@ -70,10 +70,10 @@ ___
 $ cd dashboard-shop-web
 
 # Install the necessary dependencies
-$ yarn
+$ pnpm install
 
 # Run the project
-$ yarn dev
+$ pnpm dev
 
 # The terminal will display the local address where the application is running (something like this):
 
