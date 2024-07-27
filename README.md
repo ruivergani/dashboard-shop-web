@@ -3,20 +3,19 @@
 </p>
 
 <p align="center" margin-top="25px" >
-  <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/ruivergani/ignite-github-blog">
+  <img alt="GitHub Top Language" src="https://img.shields.io/github/languages/top/ruivergani/dashboard-shop-web">
 
-  <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/ruivergani/ignite-github-blog">
+  <img alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/ruivergani/dashboard-shop-web">
 
-  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/ruivergani/ignite-github-blog">
+  <img alt="Repository Size" src="https://img.shields.io/github/repo-size/ruivergani/dashboard-shop-web">
 
-  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/ruivergani/ignite-github-blog">
+  <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/ruivergani/dashboard-shop-web">
 
-  <img alt="Repository issues" src="https://img.shields.io/github/issues/ruivergani/ignite-github-blog">
+  <img alt="Repository issues" src="https://img.shields.io/github/issues/ruivergani/dashboard-shop-web">
 
-  <img alt="GitHub" src="https://img.shields.io/github/license/ruivergani/ignite-github-blog">
+  <img alt="GitHub" src="https://img.shields.io/github/license/ruivergani/dashboard-shop-web">
 </p>
 
-This project was part of a ReactJS and TypeScript course to practice front-end development concepts.
 ___
 
 ## 💻 About
@@ -75,7 +74,7 @@ ___
 Clone the project to the desired location on your computer.
 
 ```bash
-$ git clone git@github.com:ruivergani/ignite-github-blog.git
+$ git clone git@github.com:ruivergani/dashboard-shop-web.git
 ```
 ___
 
@@ -83,7 +82,7 @@ ___
 ```bash
 
 # Navigate to the directory
-$ cd ignite-github-blog
+$ cd dashboard-shop-web
 
 # Install the necessary dependencies
 $ yarn
