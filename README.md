@@ -20,27 +20,16 @@ ___
 
 ## 💻 About
 
-In this challenge, you will develop an application that will use the GitHub API to search for issues from a repository, data from your profile and display them as a blog.
+This project focuses on practicing both the concepts we have seen about React and communication with APIs via HTTP requests. We will also introduce testing in frontend applications. Therefore, we will develop a management application for a pizzeria (admin dashboard) using React, TailwindCSS, React Query, Shadcn/ui, and more technologies.
 
-- Listing of your profile with image, number of followers, name and other information available via the GitHub API.
-- List and filter all issues in the repository with a small summary of their content
-- Create a page to display a complete post (issue)
-
-Although there are few features, you will need to remember concepts such as:
-
-- Fetch/Axios
-- Routing and React Router DOM
-- Forms
-
-To complete this challenge you will need to make some preparations and mainly do some research to understand the GitHub API.
+- [nothing to add]
 
 ___
 
 ## 🎨 Layout
 The page in desktop format is seen in the image below:
-\
-\
 
+- [nothing to add]
 
 ___
 
@@ -63,10 +52,7 @@ ___
 
 ## Functionalities
 
-- Listing of your profile with image, number of followers, name and other information available via the GitHub API.
-- List and filter all issues in the repository with a small summary of their content
-- Create a page to display a complete post (issue)
-  
+- [nothing to add]
 ___
 
 ## 🚀 How to use
