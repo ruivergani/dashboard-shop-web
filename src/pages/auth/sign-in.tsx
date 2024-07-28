@@ -1,10 +1,28 @@
 import { Label } from "@radix-ui/react-label"
 import { Helmet } from "react-helmet-async"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+const signInForm = z.object({
+  email: z.string().email(),
+})
+type signInForm = z.infer<typeof signInForm>
+
 export function SignIn() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<signInForm>()
+
+  async function handleSignIn(data: signInForm) {
+    console.log(data)
+    await new Promise(resolve => setTimeout(resolve, 2000))
+  }
+
   return (
     <>
       <Helmet title="Login" />
@@ -21,15 +39,22 @@ export function SignIn() {
           <form
             action=""
             className="flex flex-col gap-4"
+            onSubmit={handleSubmit(handleSignIn)}
           >
             <div className="space-y-2">
               <Label htmlFor="email">Your E-mail</Label>
               <Input
                 id="email"
                 type="email"
+                {...register("email")}
               ></Input>
             </div>
-            <Button className="w-full">Access Panel</Button>
+            <Button
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              Access Panel
+            </Button>
           </form>
         </div>
       </div>
