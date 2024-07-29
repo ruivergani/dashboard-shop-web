@@ -1,16 +1,15 @@
-import { ArrowRight, Search, X } from "lucide-react"
 import { Helmet } from "react-helmet-async"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
+import { OrderTableFilter } from "./order-table-filters"
+import { OrderTableRowCustom } from "./order-table-row"
 
 export function Orders() {
   return (
@@ -19,16 +18,7 @@ export function Orders() {
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Orders</h1>
         <div className="space-y-2.5">
-          <form
-            action=""
-            className="flex items-center gap-2"
-          >
-            <span className="text-sm font-semibold">Filters:</span>
-            <Input
-              placeholder="Client name"
-              className="h-8 w-[320px]"
-            ></Input>
-          </form>
+          <OrderTableFilter></OrderTableFilter>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
@@ -46,65 +36,7 @@ export function Orders() {
               <TableBody>
                 {Array.from({ length: 10 }).map((_, indice) => {
                   return (
-                    <TableRow key={indice}>
-                      <TableCell>
-                        <Button
-                          variant="outline"
-                          size="xs"
-                        >
-                          <Search className="h-3 w-3"></Search>
-                          <span className="sr-only">Details of order</span>
-                        </Button>
-                      </TableCell>
-                      <TableCell className="font-mono text-xs font-medium">
-                        03454545
-                      </TableCell>
-                      <TableCell className="text-muted-foreground">
-                        15 minutes ago
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <span className="h-2 w-2 rounded-full bg-slate-400"></span>
-                          <span className="font-medium text-muted-foreground">
-                            Pending
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="h-2 w-2 rounded-full bg-green-600"></span>
-                          <span className="font-medium text-muted-foreground">
-                            Completed
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="h-2 w-2 rounded-full bg-red-600"></span>
-                          <span className="font-medium text-muted-foreground">
-                            Cancelled
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        Rui Vergani Neto
-                      </TableCell>
-                      <TableCell className="font-medium">$250.00</TableCell>
-                      <TableCell>
-                        <Button
-                          variant="outline"
-                          size="xs"
-                        >
-                          <ArrowRight className="mr-2 h-3 w-3" />
-                          Approve
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="xs"
-                        >
-                          <X className="mr-2 h-3 w-3"></X>
-                          Cancel
-                        </Button>
-                      </TableCell>
-                    </TableRow>
+                    <OrderTableRowCustom key={indice}></OrderTableRowCustom>
                   )
                 })}
               </TableBody>
