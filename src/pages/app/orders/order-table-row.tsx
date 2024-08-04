@@ -1,23 +1,29 @@
 import { ArrowRight, Search, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { TableCell, TableRow } from "@/components/ui/table"
+
+import { OrderDetails } from "./order-details"
 
 export function OrderTableRowCustom() {
   return (
     <TableRow>
       <TableCell>
-        <Button
-          variant="outline"
-          size="xs"
-        >
-          <Search className="h-3 w-3"></Search>
-          <span className="sr-only">Details of order</span>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              size="xs"
+            >
+              <Search className="h-3 w-3"></Search>
+              <span className="sr-only">Details of order</span>
+            </Button>
+          </DialogTrigger>
+          <OrderDetails />
+        </Dialog>
       </TableCell>
-      <TableCell className="font-mono text-xs font-medium">
-        03454545
-      </TableCell>
+      <TableCell className="font-mono text-xs font-medium">03454545</TableCell>
       <TableCell className="text-muted-foreground">15 minutes ago</TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
