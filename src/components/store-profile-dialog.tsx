@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
@@ -28,6 +28,7 @@ const storeProfileSchema = z.object({
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
 
 export function StoreProfileDialog() {
+  const queryClient = useQueryClient()
   // API React Query
   const { data: managedRestaurant } = useQuery({
     queryKey: ["managed-restaurant"], // identification for the same request in different places
@@ -51,7 +52,20 @@ export function StoreProfileDialog() {
   // Update Profile function
   const { mutateAsync: updateProfileFn } = useMutation({
     mutationFn: updateProfile,
+    // Cache manipulation with queryClient
+    onSuccess(_, { name, description }) {
+      const cached = queryClient.getQueryData(["managed-restaurant"]) // retrieves the current cached data for the managed restaurant
+      if (cached) {
+        // Updates the cached data by merging existing data with new name, and description.
+        queryClient.setQueryData(["managed-restaurant"], {
+          ...cached,
+          name,
+          description,
+        })
+      }
+    },
   })
+
   async function handleUpdateProfile(data: StoreProfileSchema) {
     try {
       await updateProfileFn({
