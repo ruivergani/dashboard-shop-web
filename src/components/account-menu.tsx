@@ -26,6 +26,7 @@ export function AccountMenu() {
     useQuery({
       queryKey: ["managed-restaurant"], // identification for the same request in different places
       queryFn: getManagedRestaurant,
+      staleTime: Infinity, // do not load this when return to screen focus
     })
 
   return (
