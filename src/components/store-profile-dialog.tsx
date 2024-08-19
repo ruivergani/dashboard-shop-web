@@ -4,7 +4,10 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { getManagedRestaurant } from "@/api/get-managed-restaurant"
+import {
+  getManagedRestaurant,
+  GetManagedRestaurantResponse,
+} from "@/api/get-managed-restaurant"
 import { updateProfile } from "@/api/update-profile"
 
 import { Button } from "./ui/button"
@@ -22,7 +25,7 @@ import { Textarea } from "./ui/textarea"
 
 const storeProfileSchema = z.object({
   name: z.string().min(1),
-  description: z.string(),
+  description: z.string().nullable(),
 })
 
 type StoreProfileSchema = z.infer<typeof storeProfileSchema>
@@ -50,18 +53,38 @@ export function StoreProfileDialog() {
   })
 
   // Update Profile function
-  const { mutateAsync: updateProfileFn } = useMutation({
-    mutationFn: updateProfile,
-    // Cache manipulation with queryClient
-    onSuccess(_, { name, description }) {
-      const cached = queryClient.getQueryData(["managed-restaurant"]) // retrieves the current cached data for the managed restaurant
-      if (cached) {
-        // Updates the cached data by merging existing data with new name, and description.
-        queryClient.setQueryData(["managed-restaurant"], {
+  function updateManagedRestaurantCache({
+    name,
+    description,
+  }: StoreProfileSchema) {
+    const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
+      "managed-restaurant",
+    ]) // retrieves the current cached data for the managed restaurant
+    if (cached) {
+      // Updates the cached data by merging existing data with new name, and description.
+      queryClient.setQueryData<GetManagedRestaurantResponse>(
+        ["managed-restaurant"],
+        {
           ...cached,
           name,
           description,
-        })
+        },
+      )
+    }
+    return { cached }
+  }
+
+  const { mutateAsync: updateProfileFn } = useMutation({
+    mutationFn: updateProfile,
+    // Cache manipulation with queryClient
+    onMutate({ name, description }) {
+      const { cached } = updateManagedRestaurantCache({ name, description })
+
+      return { previousProfile: cached }
+    },
+    onError(_, __, context) {
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(context.previousProfile)
       }
     },
   })
