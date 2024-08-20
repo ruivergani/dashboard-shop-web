@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { Building, ChevronDown, LogOut } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 import { getManagedRestaurant } from "@/api/get-managed-restaurant"
 import { getProfile } from "@/api/get-profile"
+import { signOut } from "@/api/sign-out"
 
 import { StoreProfileDialog } from "./store-profile-dialog"
 import { Button } from "./ui/button"
@@ -18,6 +20,8 @@ import {
 import { Skeleton } from "./ui/skeleton"
 
 export function AccountMenu() {
+  const navigate = useNavigate()
+
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ["profile"], // identification for the same request in different places
     queryFn: getProfile,
@@ -28,6 +32,13 @@ export function AccountMenu() {
       queryFn: getManagedRestaurant,
       staleTime: Infinity, // do not load this when return to screen focus
     })
+  // Sign Out Function
+  const { mutateAsync: signOutFn, isPending: isSigningOut } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      navigate("/sign-in", { replace: true }) // substituir a rota evitando usuario clicar no botao de voltar e retornar para o dashboard
+    },
+  })
 
   return (
     <Dialog>
@@ -71,9 +82,18 @@ export function AccountMenu() {
               <span>Store Profile</span>
             </DropdownMenuItem>
           </DialogTrigger>
-          <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
-            <LogOut className="mr-2 h-4 w-4"></LogOut>
-            <span>Exit</span>
+          <DropdownMenuItem
+            className="text-rose-500 dark:text-rose-400"
+            asChild
+            disabled={isSigningOut}
+          >
+            <button
+              onClick={() => signOutFn()}
+              className="w-full"
+            >
+              <LogOut className="mr-2 h-4 w-4"></LogOut>
+              <span>Exit</span>
+            </button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
