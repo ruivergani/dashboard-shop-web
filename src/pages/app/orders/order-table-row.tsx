@@ -1,12 +1,24 @@
+import { formatDistanceToNow } from "date-fns"
 import { ArrowRight, Search, X } from "lucide-react"
 
+import { OrderStatus } from "@/components/order-status"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { TableCell, TableRow } from "@/components/ui/table"
 
 import { OrderDetails } from "./order-details"
 
-export function OrderTableRowCustom() {
+export interface OrderTableRowProps {
+  order: {
+    orderId: string
+    createdAt: string
+    status: "pending" | "canceled" | "processing" | "delivering" | "delivered"
+    customerName: string
+    total: number
+  }
+}
+
+export function OrderTableRowCustom({ order }: OrderTableRowProps) {
   return (
     <TableRow>
       <TableCell>
@@ -23,24 +35,24 @@ export function OrderTableRowCustom() {
           <OrderDetails />
         </Dialog>
       </TableCell>
-      <TableCell className="font-mono text-xs font-medium">03454545</TableCell>
-      <TableCell className="text-muted-foreground">15 minutes ago</TableCell>
-      <TableCell>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-slate-400"></span>
-          <span className="font-medium text-muted-foreground">Pending</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-green-600"></span>
-          <span className="font-medium text-muted-foreground">Completed</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-red-600"></span>
-          <span className="font-medium text-muted-foreground">Cancelled</span>
-        </div>
+      <TableCell className="font-mono text-xs font-medium">
+        {order.orderId}
       </TableCell>
-      <TableCell className="font-medium">Rui Vergani Neto</TableCell>
-      <TableCell className="font-medium">$250.00</TableCell>
+      <TableCell className="text-muted-foreground">
+        {formatDistanceToNow(order.createdAt, {
+          addSuffix: true, // add the word ago
+        })}
+      </TableCell>
+      <TableCell>
+        <OrderStatus status={order.status}></OrderStatus>
+      </TableCell>
+      <TableCell className="font-medium">{order.customerName}</TableCell>
+      <TableCell className="font-medium">
+        {order.total.toLocaleString("gb-EN", {
+          style: "currency",
+          currency: "GBP",
+        })}
+      </TableCell>
       <TableCell>
         <Button
           variant="outline"

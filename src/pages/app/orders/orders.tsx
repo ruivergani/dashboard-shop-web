@@ -1,5 +1,7 @@
+import { useQuery } from "@tanstack/react-query"
 import { Helmet } from "react-helmet-async"
 
+import { getOrders } from "@/api/get-orders"
 import { Pagination } from "@/components/pagination"
 import {
   Table,
@@ -13,6 +15,12 @@ import { OrderTableFilter } from "./order-table-filters"
 import { OrderTableRowCustom } from "./order-table-row"
 
 export function Orders() {
+  // Order Query
+  const { data: result } = useQuery({
+    queryKey: ["orders"],
+    queryFn: getOrders,
+  })
+
   return (
     <>
       <Helmet title="Orders" />
@@ -26,7 +34,7 @@ export function Orders() {
                 <TableRow>
                   <TableHead className="w-[64px]"></TableHead>
                   <TableHead className="w-[140px]">Identificator</TableHead>
-                  <TableHead className="w-[180px]">Made in</TableHead>
+                  <TableHead className="w-[180px]">Carried out</TableHead>
                   <TableHead className="w-[140px]">Status</TableHead>
                   <TableHead>Client</TableHead>
                   <TableHead className="w-[140px]">Total of Order</TableHead>
@@ -35,11 +43,15 @@ export function Orders() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Array.from({ length: 10 }).map((_, indice) => {
-                  return (
-                    <OrderTableRowCustom key={indice}></OrderTableRowCustom>
-                  )
-                })}
+                {result &&
+                  result.orders.map(order => {
+                    return (
+                      <OrderTableRowCustom
+                        key={order.orderId}
+                        order={order}
+                      ></OrderTableRowCustom>
+                    )
+                  })}
               </TableBody>
             </Table>
           </div>
