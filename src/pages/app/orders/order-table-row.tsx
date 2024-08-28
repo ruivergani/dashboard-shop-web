@@ -17,7 +17,6 @@ export interface OrderTableRowProps {
     total: number
   }
 }
-
 export function OrderTableRowCustom({ order }: OrderTableRowProps) {
   return (
     <TableRow>
